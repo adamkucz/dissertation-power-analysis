@@ -11,7 +11,6 @@ set.seed(10729)
 
 #' @param n_subjects number of subjects enrolled
 #' @param n_prompts number of prompts per subject total
-#' @param gamma vector of fixed effects
 #' @return sampled data with N 
 sampleData <- function(n_subjects, n_prompts, gamma, G, sigma2){
   
@@ -39,19 +38,21 @@ sampleData <- function(n_subjects, n_prompts, gamma, G, sigma2){
                                                                     n = n_prompts) + rnorm(1, 0, 3),
                                               simplify = F)))
   
+  # Create between- and within-person centered vars and lagged loneliness
   X <- X %>%
     mutate(pid = pids,
            day = rep(1:14, each = 5, times = n_subjects),
            loneliness_gm = mean(loneliness)) %>%
     group_by(pid) %>%
-    mutate(loneliness_pmc = loneliness - mean(loneliness),
-           loneliness_gmc = mean(loneliness) - loneliness_gm) %>%
     arrange(pid, day) %>%
-    mutate(lon_pmc_l1 = dplyr::lag(loneliness_pmc, n = 1)) %>%
+    mutate(loneliness_pmc = loneliness - mean(loneliness),
+           loneliness_gmc = mean(loneliness) - loneliness_gm,
+           lon_pmc_l1 = dplyr::lag(loneliness_pmc, n = 1)) %>%
     ungroup() %>%
-    select(intercept, loneliness_gmc, loneliness_pmc, lon_pmc_l1)
-  
-  # between-person (level 2) random effects
+    select(intercept, loneliness_gmc, loneliness_pmc, lon_pmc_l1) %>%
+    as.matrix()
+    
+  # Between-person (level 2) random effects
   # multivariate normal with mu = 0 and sigma = G
   uj <- rmnorm(n = n_subjects,
                mean = rep(0, ncol(G)),
@@ -68,7 +69,7 @@ sampleData <- function(n_subjects, n_prompts, gamma, G, sigma2){
                    n = n_subjects*n_prompts,
                    sd = sqrt(sigma2))
   
-  # matrix of beta js
+  # Matrix of beta js
   # gamma (fixed effects) with random effects added to each
   betaj <- matrix(gamma, nrow = n_subjects, ncol = length(gamma), byrow = TRUE) + uj
   
@@ -107,12 +108,14 @@ fits <- foreach(i = 1:nsims,
                                   n_prompts = n_days*n_pings)
                   
                   # Fit model
-                  fit <- try(lme(fixed = depressedmood ~ 1 + loneliness_gmc + loneliness_pmc + lon_pmc_l1,
-                                 random = ~ 1 + loneliness_pmc + lon_pmc_l1 | pid,
-                                 data = d,
-                                 correlation = corAR1(),
-                                 na.action = na.omit,
-                                 control = lmeControl(opt = "optim")))
+                  fit <- try({
+                    lme(fixed = depressedmood ~ 1 + loneliness_gmc + loneliness_pmc + lon_pmc_l1,
+                        random = ~ 1 + loneliness_pmc + lon_pmc_l1 | pid,
+                        data = d,
+                        correlation = corAR1(),
+                        na.action = na.omit,
+                        control = lmeControl(opt = "optim"))
+                  })
                   
                   # If model does not converge, resample and fit again
                   while(class(fit) == "try-error"){
@@ -148,8 +151,3 @@ power_lonpmc_l1 <- sum(pval_lonpmc_l1 < alpha) / length(pval_lonpmc_l1)
 message("Power Loneliness PMC: ", power_lonpmc)
 message("Power Loneliness GMC: ", power_longmc)
 message("Power Loneliness LAG1 PMC: ", power_lonpmc_l1)
-
-psych::describe(sapply(fixedefs, function(x) x["(Intercept)"]))
-psych::describe(sapply(fixedefs, function(x) x["loneliness_pmc"]))
-psych::describe(sapply(fixedefs, function(x) x["loneliness_gmc"]))
-psych::describe(sapply(fixedefs, function(x) x["lon_pmc_l1"]))
