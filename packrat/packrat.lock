@@ -1,0 +1,154 @@
+PackratFormat: 1.4
+PackratVersion: 0.5.0
+RVersion: 4.0.3
+Repos: CRAN=https://cloud.r-project.org
+
+Package: R6
+Source: CRAN
+Version: 2.5.0
+Hash: 25ebbd2664a276c915984da5c820c404
+
+Package: assertthat
+Source: CRAN
+Version: 0.2.1
+Hash: 622be49032fe50bd42e96aaef613e209
+
+Package: cli
+Source: CRAN
+Version: 2.2.0
+Hash: 38b61c4b8af7c1a3d9b260f3e5ef8018
+Requires: assertthat, crayon, fansi, glue
+
+Package: crayon
+Source: CRAN
+Version: 1.3.4
+Hash: ff2840dd9b0d563fc80377a5a45510cd
+
+Package: digest
+Source: CRAN
+Version: 0.6.27
+Hash: 8ba156629c1537635b39332c93d8ed33
+
+Package: doParallel
+Source: CRAN
+Version: 1.0.16
+Hash: 0bfafffe940c8fc4bc4f785018b17dde
+Requires: foreach, iterators
+
+Package: dplyr
+Source: CRAN
+Version: 1.0.2
+Hash: ea54da55bb8474c5f1e7852ea3315c22
+Requires: R6, ellipsis, generics, glue, lifecycle, magrittr, rlang,
+    tibble, tidyselect, vctrs
+
+Package: ellipsis
+Source: CRAN
+Version: 0.3.1
+Hash: b294fcc92985c6235df03c1c34f25e99
+Requires: rlang
+
+Package: fansi
+Source: CRAN
+Version: 0.4.1
+Hash: fc0a252b8e427847d13e89f56ab4665e
+
+Package: foreach
+Source: CRAN
+Version: 1.5.1
+Hash: 6dda99e5cba20abf021b0e6cfb3472df
+Requires: iterators
+
+Package: generics
+Source: CRAN
+Version: 0.1.0
+Hash: c265031f21f6435ffaa9633eb64c3095
+
+Package: glue
+Source: CRAN
+Version: 1.4.2
+Hash: afa798ba9deec3676e20300b79094749
+
+Package: iterators
+Source: CRAN
+Version: 1.0.13
+Hash: 750adbdf6750e2dbcf2066c443d64892
+
+Package: lifecycle
+Source: CRAN
+Version: 0.2.0
+Hash: df8649860c43571aab68cc73a2a02807
+Requires: glue, rlang
+
+Package: magrittr
+Source: CRAN
+Version: 2.0.1
+Hash: d3c166b0573ae8c918edf7221dfe7380
+
+Package: mnormt
+Source: CRAN
+Version: 2.0.2
+Hash: a56d486d334c1a57ae60c8ec8a146b8f
+Requires: tmvnsim
+
+Package: packrat
+Source: CRAN
+Version: 0.5.0
+Hash: 498643e765d1442ba7b1160a1df3abf9
+
+Package: pillar
+Source: CRAN
+Version: 1.4.7
+Hash: 351820c51ab35510b740150c0dac9073
+Requires: cli, crayon, ellipsis, fansi, lifecycle, rlang, utf8, vctrs
+
+Package: pkgconfig
+Source: CRAN
+Version: 2.0.3
+Hash: 5ff5f2361851a49534c96caa2a8071c7
+
+Package: psych
+Source: CRAN
+Version: 2.0.12
+Hash: eee916de28939a5b1b3ac1e345595e7b
+Requires: mnormt
+
+Package: purrr
+Source: CRAN
+Version: 0.3.4
+Hash: fb4c0edca61826ca0b5b33c828a7b276
+Requires: magrittr, rlang
+
+Package: rlang
+Source: CRAN
+Version: 0.4.9
+Hash: ae313ae34e2f40b6d8be5ede38c65c6b
+
+Package: tibble
+Source: CRAN
+Version: 3.0.4
+Hash: 2e0983335c94bafa840aae599fbf8b96
+Requires: cli, crayon, ellipsis, fansi, lifecycle, magrittr, pillar,
+    pkgconfig, rlang, vctrs
+
+Package: tidyselect
+Source: CRAN
+Version: 1.1.0
+Hash: 1c7cea9ea925b701a93f378ec7233ee1
+Requires: ellipsis, glue, purrr, rlang, vctrs
+
+Package: tmvnsim
+Source: CRAN
+Version: 1.0-2
+Hash: ee9a521f8c9708b62a1f14f8a141cabe
+
+Package: utf8
+Source: CRAN
+Version: 1.1.4
+Hash: f3f97ce59092abc8ed3fd098a59e236c
+
+Package: vctrs
+Source: CRAN
+Version: 0.3.6
+Hash: 7640fab855dba3322264f50574e6bdcd
+Requires: digest, ellipsis, glue, rlang
