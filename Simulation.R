@@ -122,12 +122,15 @@ fits <- foreach(i = 1:nsims,
                     d <- sampleData(n_subjects = n_subj,
                                     n_prompts = n_days*n_pings)
                     
-                    fit <- try(lme(fixed = depressedmood ~ 1 + loneliness_gmc + loneliness_pmc + lon_pmc_l1,
-                                   random = ~ 1 + loneliness_pmc + lon_pmc_l1 | pid,
-                                   data = d,
-                                   correlation = corAR1(),
-                                   na.action = na.omit,
-                                   control = lmeControl(opt = "optim")))
+                    fit <- try({
+                      lme(fixed = depressedmood ~ 1 + loneliness_gmc + loneliness_pmc + lon_pmc_l1,
+                          random = ~ 1 + loneliness_pmc + lon_pmc_l1 | pid,
+                          data = d,
+                          correlation = corAR1(),
+                          na.action = na.omit,
+                          control = lmeControl(opt = "optim"))
+                      
+                    })   
                   }
                   
                   return(fit)
