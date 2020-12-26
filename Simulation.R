@@ -12,7 +12,7 @@ set.seed(10729)
 #' @param n_subjects number of subjects enrolled
 #' @param n_prompts number of prompts per subject total
 #' @return sampled data with N 
-sampleData <- function(n_subjects, n_prompts, gamma, G, sigma2){
+sampleData <- function(n_subjects, n_prompt){
   
   # Create participant ID numbers
   pids <- rep(seq_len(n_subjects), each =  n_prompts)
